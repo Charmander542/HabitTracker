@@ -10,6 +10,7 @@
 // =============================================================
 
 #include <Arduino.h>
+#include <time.h>
 #include "config.h"
 
 // -------------------------------------------------------------
@@ -62,6 +63,12 @@ public:
   // `now` = millis() value for smooth delta-based animation.
   void update(unsigned long now);
 
+  // Apply time-based vitality loss (awake or sleep). `nowEpoch` = Unix seconds (RTC).
+  void tickVitalityDecay(time_t nowEpoch);
+
+  // On cold boot: apply capped decay for time spent powered off.
+  void applyBootDecay(time_t nowEpoch);
+
   // Returns the current animation frame number (0–63 cycling).
   int getAnimFrame() const;
 
@@ -78,6 +85,7 @@ public:
 
 private:
   int              _vitality   = VITALITY_START;
+  time_t           _lastDecayEpoch = 0;
   int              _animFrame  = 0;
   unsigned long    _lastTick   = 0;
   DialogueContext  _lastCtx    = DIALOGUE_IDLE_GENERAL;

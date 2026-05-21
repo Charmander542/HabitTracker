@@ -185,4 +185,5 @@
  .pio/libdeps/seeed_sensecap_watcher/ArduinoJson/src/ArduinoJson/Configuration.hpp \
  include/config.h include/storage.h \
  C:/.platformio/packages/framework-arduinoespressif32/libraries/LittleFS/src/LittleFS.h \
- C:/.platformio/packages/framework-arduinoespressif32/libraries/FS/src/FS.h
+ C:/.platformio/packages/framework-arduinoespressif32/libraries/FS/src/FS.h \
+ include/rtc.h

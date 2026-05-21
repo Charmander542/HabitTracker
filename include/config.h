@@ -87,13 +87,21 @@
 // ---------------------------------------------------------------
 #define VITALITY_MAX             100
 #define VITALITY_MIN               0
-#define VITALITY_START            70
+#define VITALITY_START           100   // two full days at -50/day → 0 without habits
 #define VITALITY_THRIVING_MIN     80
 #define VITALITY_HAPPY_MIN        60
 #define VITALITY_TIRED_MIN        40
 #define VITALITY_STRUGGLING_MIN   20
-#define VITALITY_GAIN_PER_HABIT   10
-#define VITALITY_LOSS_PER_MISS     5
+// Each habit done restores half a day's drain (both = +50, offsets one day).
+#define VITALITY_GAIN_PER_HABIT   25
+
+// Linear drain: 50 vitality per 24 h (awake or sleep). Miss both habits two days → dead.
+#define VITALITY_DECAY_PER_DAY    50
+#define VITALITY_DAY_SEC          (24 * 60 * 60)
+// Max vitality applied on cold boot from elapsed offline time (two days).
+#define VITALITY_BOOT_DECAY_CAP   (VITALITY_DECAY_PER_DAY * 2)
+
+#define HABITS_SCHEMA_VERSION         2
 
 #define GOAL_INCREASE_THRESHOLD  100
 #define GOAL_STAY_THRESHOLD       50
@@ -119,7 +127,7 @@
 #define TZ_OFFSET_SEC   (-5 * 3600)
 #define DST_OFFSET_SEC  3600
 
-#define DEFAULT_HABIT_COUNT  5
+#define DEFAULT_HABIT_COUNT  2
 #define MAX_HABIT_COUNT      20
 
 #define ENCODER_DEBOUNCE_MS  8

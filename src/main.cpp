@@ -66,6 +66,7 @@ static unsigned long stateEnteredAt = 0;
 // IDLE state
 static unsigned long lastHeartbeat     = 0;
 static unsigned long lastDayCheck      = 0;
+static unsigned long lastVitalityDecay = 0;
 static String        lastKnownDate     = "";
 static bool          morningGreetShown = false;
 
@@ -171,7 +172,7 @@ void checkDayRollover() {
     morningGreetShown = false;
 
     // Roll over so lastLogDate is set correctly on first boot
-    habits.rolloverDay(today);
+    habits.catchUpToDate(today);
     habits.save();
     return;
   }
@@ -179,12 +180,10 @@ void checkDayRollover() {
   Serial.printf("[Main] New day detected: %s → %s\n",
                 lastKnownDate.c_str(), today.c_str());
 
-  // Rollover returns the number of missed habits
-  int missed = habits.rolloverDay(today);
+  const int missed = habits.catchUpToDate(today);
   if (missed > 0) {
-    pet.subtractVitality(missed * VITALITY_LOSS_PER_MISS);
     pet.setLastDialogueContext(DIALOGUE_MISSED_HABIT);
-    Serial.printf("[Main] %d habits missed — vitality: %d\n",
+    Serial.printf("[Main] %d habits missed yesterday — vitality: %d\n",
                   missed, pet.getVitality());
   }
 
@@ -1219,6 +1218,22 @@ static bool _sleepTickShouldWake() {
   return false;
 }
 
+// Day rollover + vitality decay. During sleep, millis() may not advance while in
+// light sleep, so we always run vitality (RTC epoch gates the actual loss).
+static void tickBackgroundSystems(unsigned long now, bool vitalityEveryWake) {
+  if (now - lastDayCheck >= 5000) {
+    lastDayCheck = now;
+    checkDayRollover();
+  } else if (vitalityEveryWake) {
+    checkDayRollover();
+  }
+
+  if (vitalityEveryWake || (now - lastVitalityDecay >= 30000)) {
+    lastVitalityDecay = now;
+    pet.tickVitalityDecay(rtc.getTimestamp());
+  }
+}
+
 static void captureWorkerTask(void*) {
   HabitCamBuffer* fb = nullptr;
   if (camera.isReady()) {
@@ -1589,6 +1604,7 @@ void loop() {
   // processed every wake — this lets the user `state idle` over USB to
   // force the device awake even without touching the knob.
   if (g_sleeping) {
+    tickBackgroundSystems(now, true);
     if (Serial.available()) {
       // A serial command came in while sleeping — wake the device so the
       // user can interact with it.
@@ -1618,11 +1634,7 @@ void loop() {
   encoder.update();
   pet.update(now);
 
-  // --- Day rollover check (every 5 seconds is sufficient) ---
-  if (now - lastDayCheck >= 5000) {
-    lastDayCheck = now;
-    checkDayRollover();
-  }
+  tickBackgroundSystems(now, false);
 
   // --- Serial config menu (every 200ms) ---
   if (now - lastSerialCheck >= 200) {

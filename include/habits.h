@@ -81,8 +81,11 @@ public:
   // Returns false if already at capacity.
   bool addHabit(const Habit& h);
 
-  // Seed the default 5 habits into the array (called on first boot)
+  // Seed Journal + Invisalign (once per day each).
   void seedDefaults();
+
+  // True if loaded habits.json matches the current schema and habit set.
+  bool isCurrentHabitSet() const;
 
 private:
   Habit _habits[MAX_HABIT_COUNT];

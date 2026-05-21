@@ -78,8 +78,8 @@ int habit_close_frontier(Habit* habits, int count, const String& openingDate) {
 // begin — load from storage or seed defaults on first boot
 // ---------------------------------------------------------------
 void HabitManager::begin() {
-  if (!load()) {
-    Serial.println("[Habits] No habits.json found — seeding defaults");
+  if (!load() || !isCurrentHabitSet()) {
+    Serial.println("[Habits] Seeding Journal + Invisalign defaults");
     seedDefaults();
     save();
   }
@@ -87,75 +87,53 @@ void HabitManager::begin() {
 }
 
 // ---------------------------------------------------------------
-// seedDefaults — populate the 5 default habits
+// isCurrentHabitSet — schema v2 with exactly Journal + Invisalign
+// ---------------------------------------------------------------
+bool HabitManager::isCurrentHabitSet() const {
+  if (_count != 2) return false;
+  bool hasJournal = false;
+  bool hasInvisalign = false;
+  for (int i = 0; i < _count; i++) {
+    if (_habits[i].name == "Journal") hasJournal = true;
+    if (_habits[i].name == "Invisalign") hasInvisalign = true;
+    if (_habits[i].goalToday != 1 || _habits[i].minGoal != 1 || _habits[i].maxGoal != 1) {
+      return false;
+    }
+  }
+  return hasJournal && hasInvisalign;
+}
+
+// ---------------------------------------------------------------
+// seedDefaults — once-per-day Journal and Invisalign
 // ---------------------------------------------------------------
 void HabitManager::seedDefaults() {
   _count = 0;
 
-  Habit hydrate;
-  hydrate.name          = "Hydrate";
-  hydrate.emoji         = "W";   // Water drop (UTF-8 may not render on basic font)
-  hydrate.color         = 0x065F; // Cyan-blue
-  hydrate.goalToday     = 8;
-  hydrate.completedToday= 0;
-  hydrate.streak        = 0;
-  hydrate.lastLogDate   = "";
-  hydrate.minGoal       = 4;
-  hydrate.maxGoal       = 14;
-  hydrate.unit          = "glasses";
-  _habits[_count++] = hydrate;
+  Habit journal;
+  journal.name           = "Journal";
+  journal.emoji          = "J";
+  journal.color          = 0xF9A0;   // Warm amber
+  journal.goalToday      = 1;
+  journal.completedToday = 0;
+  journal.streak         = 0;
+  journal.lastLogDate    = "";
+  journal.minGoal        = 1;
+  journal.maxGoal        = 1;
+  journal.unit           = "today";
+  _habits[_count++] = journal;
 
-  Habit read;
-  read.name          = "Read";
-  read.emoji         = "R";
-  read.color         = 0xF9A0; // Warm amber
-  read.goalToday     = 20;
-  read.completedToday= 0;
-  read.streak        = 0;
-  read.lastLogDate   = "";
-  read.minGoal       = 5;
-  read.maxGoal       = 60;
-  read.unit          = "min";
-  _habits[_count++] = read;
-
-  Habit meditate;
-  meditate.name          = "Meditate";
-  meditate.emoji         = "M";
-  meditate.color         = 0x881F; // Purple
-  meditate.goalToday     = 10;
-  meditate.completedToday= 0;
-  meditate.streak        = 0;
-  meditate.lastLogDate   = "";
-  meditate.minGoal       = 5;
-  meditate.maxGoal       = 30;
-  meditate.unit          = "min";
-  _habits[_count++] = meditate;
-
-  Habit move;
-  move.name          = "Move";
-  move.emoji         = "V";
-  move.color         = 0x07E0; // Green
-  move.goalToday     = 30;
-  move.completedToday= 0;
-  move.streak        = 0;
-  move.lastLogDate   = "";
-  move.minGoal       = 10;
-  move.maxGoal       = 90;
-  move.unit          = "min";
-  _habits[_count++] = move;
-
-  Habit sleep;
-  sleep.name          = "Sleep Early";
-  sleep.emoji         = "Z";
-  sleep.color         = 0x4A1F; // Indigo
-  sleep.goalToday     = 1;      // Binary: 1 = got to bed on time
-  sleep.completedToday= 0;
-  sleep.streak        = 0;
-  sleep.lastLogDate   = "";
-  sleep.minGoal       = 1;
-  sleep.maxGoal       = 1;      // Binary habit — goal is always 1
-  sleep.unit          = "night";
-  _habits[_count++] = sleep;
+  Habit invisalign;
+  invisalign.name           = "Invisalign";
+  invisalign.emoji          = "I";
+  invisalign.color          = 0x4DFF;   // Soft cyan
+  invisalign.goalToday      = 1;
+  invisalign.completedToday = 0;
+  invisalign.streak         = 0;
+  invisalign.lastLogDate    = "";
+  invisalign.minGoal        = 1;
+  invisalign.maxGoal        = 1;
+  invisalign.unit           = "today";
+  _habits[_count++] = invisalign;
 }
 
 // ---------------------------------------------------------------
@@ -163,6 +141,7 @@ void HabitManager::seedDefaults() {
 // ---------------------------------------------------------------
 void HabitManager::save() {
   JsonDocument doc;
+  doc["schema"] = HABITS_SCHEMA_VERSION;
   JsonArray arr = doc["habits"].to<JsonArray>();
 
   for (int i = 0; i < _count; i++) {
@@ -181,6 +160,9 @@ void HabitManager::save() {
 bool HabitManager::load() {
   JsonDocument doc;
   if (!storage.readJSON(PATH_HABITS_JSON, doc)) return false;
+
+  const int schema = doc["schema"] | 0;
+  if (schema != HABITS_SCHEMA_VERSION) return false;
 
   JsonArray arr = doc["habits"].as<JsonArray>();
   if (!arr) return false;

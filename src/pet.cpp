@@ -17,6 +17,19 @@
 
 extern Storage storage;
 
+namespace {
+
+// Proportional to elapsed wall time: 50 points over VITALITY_DAY_SEC.
+int vitalityLossForElapsed(time_t elapsed) {
+  if (elapsed <= 0) return 0;
+  const int64_t loss = (int64_t)elapsed * (int64_t)VITALITY_DECAY_PER_DAY
+                       / (int64_t)VITALITY_DAY_SEC;
+  if (loss > VITALITY_MAX) return VITALITY_MAX;
+  return (int)loss;
+}
+
+}  // namespace
+
 // ---------------------------------------------------------------
 // Dialogue pools — all messages are short enough to fit in the
 // speech bubble on the round display (≤ ~40 chars)
@@ -98,14 +111,17 @@ const int Pet::_missedCount = 5;
 // begin — load persisted vitality from /pet_config.json
 // ---------------------------------------------------------------
 void Pet::begin() {
+  const time_t nowEpoch = time(nullptr);
   JsonDocument doc;
   if (storage.readJSON(PATH_PET_CONFIG, doc)) {
     _vitality = doc["vitality"] | VITALITY_START;
-    // Clamp in case the file was hand-edited to an invalid value
     _vitality = constrain(_vitality, VITALITY_MIN, VITALITY_MAX);
+    _lastDecayEpoch = (time_t)(doc["lastDecayEpoch"] | (long long)nowEpoch);
     Serial.printf("[Pet] Loaded vitality: %d\n", _vitality);
+    applyBootDecay(nowEpoch);
   } else {
     _vitality = VITALITY_START;
+    _lastDecayEpoch = nowEpoch;
     Serial.printf("[Pet] First boot — vitality set to %d\n", VITALITY_START);
     save();
   }
@@ -117,6 +133,7 @@ void Pet::begin() {
 void Pet::save() {
   JsonDocument doc;
   doc["vitality"] = _vitality;
+  doc["lastDecayEpoch"] = (long long)_lastDecayEpoch;
 
   if (!storage.writeJSON(PATH_PET_CONFIG, doc)) {
     Serial.println("[Pet] ERROR: Failed to save pet_config.json");
@@ -155,6 +172,44 @@ void Pet::update(unsigned long now) {
     _lastTick = now;
     _animFrame = (_animFrame + 1) % 64;   // 64-frame cycle at 50ms = ~3.2 sec loop
   }
+}
+
+void Pet::tickVitalityDecay(time_t nowEpoch) {
+  if (nowEpoch <= 0 || _lastDecayEpoch <= 0) return;
+  if (nowEpoch <= _lastDecayEpoch) return;
+
+  const time_t elapsed = nowEpoch - _lastDecayEpoch;
+  const int loss = vitalityLossForElapsed(elapsed);
+  if (loss <= 0) return;
+
+  _lastDecayEpoch = nowEpoch;
+  subtractVitality(loss);
+  save();
+  Serial.printf("[Pet] Time decay -%d (%.1f h) → vitality %d\n",
+                loss, (float)elapsed / 3600.0f, _vitality);
+}
+
+void Pet::applyBootDecay(time_t nowEpoch) {
+  if (nowEpoch <= 0 || _lastDecayEpoch <= 0) return;
+  if (nowEpoch <= _lastDecayEpoch) {
+    _lastDecayEpoch = nowEpoch;
+    return;
+  }
+
+  const time_t elapsed = nowEpoch - _lastDecayEpoch;
+  int loss = vitalityLossForElapsed(elapsed);
+  if (loss > VITALITY_BOOT_DECAY_CAP) {
+    loss = VITALITY_BOOT_DECAY_CAP;
+  }
+  if (loss <= 0) {
+    _lastDecayEpoch = nowEpoch;
+    return;
+  }
+
+  _lastDecayEpoch = nowEpoch;
+  subtractVitality(loss);
+  save();
+  Serial.printf("[Pet] Boot catch-up decay -%d → vitality %d\n", loss, _vitality);
 }
 
 // ---------------------------------------------------------------
