@@ -1,0 +1,12 @@
+
+=== HabitTracker booting ===
+[Storage] Mounted. Used: 36864 / 23986176 bytes
+[RTC] Configured TZ offset -18000 sec, DST 3600 sec
+[WatcherBSP] IO expander + rails initialised
+[Pet] Loaded vitality: 70
+[Habits] Loaded 5 habits
+[GUI] SPD2010 412x412 (QSPI SPI3) ready
+[Camera] Stub: embedded JPEG for preview until SSCMA bridge
+[Main] Pet vitality: 70 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[State] IDLE -> HABIT_SELECT @ 23139ms

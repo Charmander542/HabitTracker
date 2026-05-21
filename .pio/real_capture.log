@@ -1,0 +1,76 @@
+[HOST] === REAL CAPTURE TEST ===
+[HOST] port=COM3 log=.pio\real_capture.log
+[HOST] waiting 4 s for boot to finish...
+[Main] Pet vitality: 100 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[Main] Type `help` on serial for the test-harness commands.
+
+[HOST] === capture round 1 ===
+[HOST] >>> preview
+[preview] calling camera.capture()...
+[Camera] =============================================
+[Camera] capture #1 requested at t=6673 ms
+[Camera] (1) SSCMA not alive — Himax appears to be running non-SSCMA firmware (run `camcold` to confirm)
+[Camera] (2) generating procedural scene...
+[synth] allocated 115200 bytes in PSRAM for synthetic frames
+[synth] frame #1 samples: TL=0xFEEA TR=0x54D1 BL=0x0920 BR=0x21C3 (vary = scene is not constant)
+[Camera] >>> SYNTH frame ready: 240x240, 115200 bytes, seed=0x8401F9DA, build=43 ms (frame #1)
+[Camera] (this scene is unique to this capture; the on-device 'SIM' badge confirms it is procedural)
+[Camera] =============================================
+[preview] got frame: 3513 bytes @ 0x3c08ccba
+[preview] drawing capture ritual preview (holds 4s)...
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc97d50  len=3513  stub=1
+[GUI] blitting RGB565 bitmap 240x240 @ 0x3d863f2c
+[preview] preview drawn and pinned — `test off` to resume
+[HOST] >>> test off
+[test] display unpinned
+[state] forced to IDLE
+
+[HOST] === capture round 2 ===
+[HOST] >>> preview
+[preview] calling camera.capture()...
+[Camera] =============================================
+[Camera] capture #2 requested at t=14688 ms
+[Camera] (1) SSCMA not alive — Himax appears to be running non-SSCMA firmware (run `camcold` to confirm)
+[Camera] (2) generating procedural scene...
+[synth] frame #2 samples: TL=0xFEEA TR=0x9516 BL=0x2203 BR=0x2203 (vary = scene is not constant)
+[Camera] >>> SYNTH frame ready: 240x240, 115200 bytes, seed=0xBFE5A16D, build=43 ms (frame #2)
+[Camera] (this scene is unique to this capture; the on-device 'SIM' badge confirms it is procedural)
+[Camera] =============================================
+[preview] got frame: 3513 bytes @ 0x3c08ccba
+[preview] drawing capture ritual preview (holds 4s)...
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc97d50  len=3513  stub=1
+[GUI] blitting RGB565 bitmap 240x240 @ 0x3d863f2c
+[preview] preview drawn and pinned — `test off` to resume
+[HOST] >>> test off
+[test] display unpinned
+[state] forced to IDLE
+
+[HOST] === capture round 3 ===
+[HOST] >>> preview
+[preview] calling camera.capture()...
+[Camera] =============================================
+[Camera] capture #3 requested at t=22682 ms
+[Camera] (1) SSCMA not alive — Himax appears to be running non-SSCMA firmware (run `camcold` to confirm)
+[Camera] (2) generating procedural scene...
+[synth] frame #3 samples: TL=0xFEEA TR=0x236F BL=0x19C1 BR=0x1181 (vary = scene is not constant)
+[Camera] >>> SYNTH frame ready: 240x240, 115200 bytes, seed=0x761976AA, build=42 ms (frame #3)
+[Camera] (this scene is unique to this capture; the on-device 'SIM' badge confirms it is procedural)
+[Camera] =============================================
+[preview] got frame: 3513 bytes @ 0x3c08ccba
+[preview] drawing capture ritual preview (holds 4s)...
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc97d50  len=3513  stub=1
+[GUI] blitting RGB565 bitmap 240x240 @ 0x3d863f2c
+[preview] preview drawn and pinned — `test off` to resume
+[HOST] >>> test off
+[test] display unpinned
+[state] forced to IDLE
+
+[HOST] === results ===
+[HOST] SSCMA alive (real camera) : None
+[HOST] synth frame samples seen  : 3
+[HOST]   frame#  1  TL=0xFEEA  TR=0x54D1  BL=0x0920  BR=0x21C3
+[HOST]   frame#  2  TL=0xFEEA  TR=0x9516  BL=0x2203  BR=0x2203
+[HOST]   frame#  3  TL=0xFEEA  TR=0x236F  BL=0x19C1  BR=0x1181
+[HOST] distinct sample tuples    : 3 of 3
+[HOST] PASS: pixel data varies across captures (buffer is regenerated each time)

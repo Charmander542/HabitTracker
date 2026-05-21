@@ -1,0 +1,141 @@
+=== Phase 1: confirm SSCMA alive ===
+
+>>> AT+ID?
+  [rx] 59 bytes
+  chip ID: 360779f5
+
+>>> AT+NAME?
+  [rx] 69 bytes
+  chip name: SenseCAP Watcher
+
+>>> AT+VER?
+  [rx] 109 bytes
+  chip ver:  {'at_api': 'v0', 'software': '2024.08.16', 'hardware': '1'}
+
+=== Phase 2: pulling full AT+HELP? ===
+
+>>> AT+HELP?
+  [rx] 1855 bytes
+  wrote 1855 chars to .pio\himax_test_after_esp32_reset\at_help.txt
+    AT+GETREG=<"ADDR">
+    AT+SETREG=<"ADDR","VAL">
+    AT+OTA
+    AT+MQTTPUBSUB?
+    AT+MQTTSERVER?
+    AT+MQTTSERVERSTA=<STA>
+    AT+MQTTSERVER=<"CLIENT_ID","ADDRESS",PORT,"USERNAME","PASSWORD",USE_SSL>
+    AT+WIFI?
+    AT+WIFIVER?
+    AT+WIFIVER=<VER>
+    AT+WIFIIN6=<"IP">
+    AT+WIFIIN4=<"IP","NETMASK","GATEWAY">
+    AT+WIFISTA=<STA>
+    AT+WIFI=<"NAME",SECURITY,"PASSWORD">
+    AT+INFO?
+    AT+INFO=<"INFO_STRING">
+    AT+INVOKE?
+    AT+INVOKE=<N_TIMES,DIFFERED,RESULT_ONLY>
+    AT+SAMPLE?
+    AT+SAMPLE=<N_TIMES>
+    AT+SENSOR?
+    AT+SENSOR=<SENSOR_ID,ENABLE/DISABLE,OPT_ID>
+    AT+SENSORS?
+    AT+ALGO?
+    AT+ALGO=<ALGORITHM_ID>
+    AT+ALGOS?
+    AT+MODEL?
+    AT+MODEL=<MODEL_ID>
+    AT+MODELS?
+    AT+LED=<ENABLE/DISABLE>
+    AT+YIELD=<TIME_S>
+    AT+BREAK
+    AT+RST
+    AT+VER?
+    AT+STAT?
+    AT+NAME?
+    AT+ID?
+    AT+HELP?
+
+=== Phase 3: trying capture commands ===
+
+>>> AT+SAMPLE=1
+  [rx] 2671 bytes
+  events: 2
+    -> {"type": 0, "name": "SAMPLE", "code": 0, "data": {"sensor": {"id": 1, "type": 1, "state": 1, "opt_id": 0, "opt_detail": "240x240 Auto"}}}
+    -> {"type": 1, "name": "SAMPLE", "code": 0, "data": {"count": 1, "resolution": [240, 240], "image": "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq6
+  *** JPEG FOUND from AT+SAMPLE=1: 1812 bytes ***
+  saved -> .pio\himax_test_after_esp32_reset\ATpSAMPLE_eq_1.jpg
+
+>>> AT+SAMPLE?
+  [rx] 54 bytes
+  events: 1
+    -> {"type": 0, "name": "SAMPLE?", "code": 0, "data": 0}
+
+>>> AT+SAMPLE=0
+  [rx] 139 bytes
+  events: 1
+    -> {"type": 0, "name": "SAMPLE", "code": 0, "data": {"sensor": {"id": 1, "type": 1, "state": 1, "opt_id": 0, "opt_detail": "240x240 Auto"}}}
+
+>>> AT+INVOKE=1,0,0
+  [rx] 3167 bytes
+  events: 3
+    -> {"type": 0, "name": "MODEL", "code": 0, "data": {"model": {"id": 1, "type": 0, "address": 4194304, "size": 0}}}
+    -> {"type": 0, "name": "INVOKE", "code": 0, "data": {"model": {"id": 1, "type": 0, "address": 4194304, "size": 0}, "algorithm": {"type": 3, "categroy": 1, "input_from": 1, "config": {"tscore": 50, "tiou"
+    -> {"type": 1, "name": "INVOKE", "code": 0, "data": {"count": 1, "perf": [7, 76, 0], "boxes": [], "resolution": [240, 240], "image": "/9j/4AAQSkZJRgABAQEASABIAAD/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCY
+  *** JPEG FOUND from AT+INVOKE=1,0,0: 1956 bytes ***
+  saved -> .pio\himax_test_after_esp32_reset\ATpINVOKE_eq_1_0_0.jpg
+
+>>> AT+INVOKE=1,0,1
+  [rx] 420 bytes
+  events: 2
+    -> {"type": 0, "name": "INVOKE", "code": 0, "data": {"model": {"id": 1, "type": 0, "address": 4194304, "size": 0}, "algorithm": {"type": 3, "categroy": 1, "input_from": 1, "config": {"tscore": 50, "tiou"
+    -> {"type": 1, "name": "INVOKE", "code": 0, "data": {"count": 1, "perf": [7, 76, 0], "boxes": [], "resolution": [240, 240]}}
+
+>>> AT+INVOKE?
+  [rx] 54 bytes
+  events: 1
+    -> {"type": 0, "name": "INVOKE?", "code": 0, "data": 0}
+
+>>> AT+ALGO?
+  [rx] 94 bytes
+  events: 1
+    -> {"type": 0, "name": "ALGO?", "code": 0, "data": {"type": 0, "categroy": 0, "input_from": 0}}
+
+>>> AT+ALGOS?
+  [rx] 412 bytes
+  events: 1
+    -> {"type": 0, "name": "ALGOS?", "code": 0, "data": [{"type": 7, "categroy": 1, "input_from": 1}, {"type": 6, "categroy": 1, "input_from": 1}, {"type": 8, "categroy": 1, "input_from": 1}, {"type": 5, "ca
+
+>>> AT+MODEL?
+  [rx] 103 bytes
+  events: 1
+    -> {"type": 0, "name": "MODEL?", "code": 0, "data": {"id": 1, "type": 0, "address": 4194304, "size": 0}}
+
+>>> AT+MODELS?
+  [rx] 266 bytes
+  events: 1
+    -> {"type": 0, "name": "MODELS?", "code": 0, "data": [{"id": 4, "type": 0, "address": 10485760, "size": 0}, {"id": 3, "type": 0, "address": 8388608, "size": 0}, {"id": 2, "type": 0, "address": 6291456, "
+
+>>> AT+INFO?
+  [rx] 1033 bytes
+  events: 1
+    -> {"type": 0, "name": "INFO?", "code": 0, "data": {"crc16_maxim": 30029, "info": "ewoJInV1aWQiOiAiZjJiOTkyMjliYTEwOGM4MmRlOTM3OWM0YjZhZDYzNTQiLAoJIm5hbWUiOiAiUGVyc29uIERldGVjdGlvbiIsCgkidmVyc2lvbiI6ICIx
+
+>>> AT+ACTION?
+  [rx] 77 bytes
+  events: 1
+    -> {"type": 2, "name": "AT", "code": 5, "data": "Unknown command: AT+ACTION?"}
+
+>>> AT+CAPTURE
+  [rx] 77 bytes
+  events: 1
+    -> {"type": 2, "name": "AT", "code": 5, "data": "Unknown command: AT+CAPTURE"}
+
+>>> AT+SNAP
+  [rx] 74 bytes
+  events: 1
+    -> {"type": 2, "name": "AT", "code": 5, "data": "Unknown command: AT+SNAP"}
+
+=== done ===
+  CAPTURED a real JPEG (1956 bytes) via UART
+  open the .jpg files in .pio\himax_test_after_esp32_reset to see what the camera sees

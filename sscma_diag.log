@@ -1,0 +1,135 @@
+
+===== BOOT + setup() (for 12.0s) =====
+
+=== HabitTracker booting ===
+[Boot] chip: ESP32-S3 rev0  cores=2  cpu=240MHz
+[Boot] flash: 33554432 bytes  sketch: 766176 / 4718592 bytes
+[Boot] heap: total=340716 free=315780
+[Boot] psram: total=8386215 free=8385791  OK
+[Duck] Converted 9 frames (25x25), 2300 opaque px total
+[Storage] Mounted. Used: 49152 / 23986176 bytes
+[RTC] Configured TZ offset -18000 sec, DST 3600 sec
+[WatcherBSP] IO expander + rails initialised
+[Pet] Loaded vitality: 100
+[Habits] Loaded 5 habits
+[GUI] SPD2010 412x412 (QSPI SPI3) ready
+[Camera] Stub: embedded RGB565 scene 240x240 (115200 bytes) + JPEG mirror (3513 bytes)
+[sscma] begin()
+[sscma] expander cfg=0x20FF out=0xDF00 in=see dumpStatus()
+[sscma] SPI2 up: SCLK=4 MOSI=5 MISO=6 CS=21 @ 12 MHz
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma] probing with AT+ID? ...
+[sscma] sendAT(8): AT+ID?
+
+[sscma]   rx (32/59 byte preview): 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B  ';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;'
+[sscma]   rx (32/4096 byte preview): 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B  ';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;'
+[sscma]   rx (32/4096 byte preview): 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B  ';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;'
+[sscma]   rx (32/4096 byte preview): 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B 3B  ';;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;'
+[sscma]   ... (rx debug capped at 4 lines/call)
+[sscma] ERR: scratch buffer > 64 KiB without framing, aborting
+[sscma] no response to AT+ID? within 2.5s — Himax silent
+[sscma]   (this either means the Himax firmware is missing/stuck,
+[sscma]    or the SPI wiring / power is wrong; use `camstatus` + `campoke`)
+[Main] SSCMA camera NOT responding — using stub scene
+[Main]   run `caminit` / `camstatus` for a noisy re-probe
+[Main] Pet vitality: 100 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[Main] Type `help` on serial for the test-harness commands.
+
+===== CMD: caminit (for 8.0s) =====
+[caminit] re-probing SSCMA/Himax...
+[sscma] begin()
+[sscma] expander cfg=0x207F out=0xDF80 in=see dumpStatus()
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma] probing with AT+ID? ...
+[sscma] sendAT(8): AT+ID?
+
+[sscma] readJsonResponse TIMEOUT after 2500 ms (scratch=0 bytes)
+[sscma] no response to AT+ID? within 2.5s — Himax silent
+[sscma]   (this either means the Himax firmware is missing/stuck,
+[sscma]    or the SPI wiring / power is wrong; use `camstatus` + `campoke`)
+[caminit] result: FAILED  (ready=1 alive=0)
+
+===== CMD: camstatus (for 2.0s) =====
+[sscma] --- status ---
+[sscma] ready=YES alive=no
+[sscma] PCA9535  IN=0xFFD9  OUT=0xDF80  CFG=0x207F
+[sscma]   AI_CHIP pwr (bit 11) = ON
+[sscma]   SYNC (bit 6) = HIGH   (HIGH == Himax has data)
+[sscma]   RST  (bit 7) = HIGH   (HIGH == running)
+[sscma] SPI CS=21 SCLK=4 MOSI=5 MISO=6  begun=YES
+[sscma] AVAILABLE = 0
+
+===== CMD: cambus (for 6.0s) =====
+[sscma] === BUS PROBE ===
+[sscma] 1) clocking with CS HIGH (Himax should ignore)
+[sscma]   CSHIGH rx: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[sscma] 2) RST LOW (chip in reset), CS LOW
+[sscma]   RST_LO rx: FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+[sscma] 3) RST HIGH (release), waiting 1.2s, then CS LOW
+[sscma]   RUN    rx: FC F0 C0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[sscma] 4) same as 3 but at 200 kHz
+[sscma]   SLOW   rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[sscma] 5) SYNC line over 3s (expander pin 6)
+[sscma]   t=0 SYNC=1
+[sscma]   t=3000 SYNC=1 (final)
+[sscma] === PROBE DONE ===
+[sscma] Interpretation:
+[sscma]   - CSHIGH identical to RUN   => MISO pulled up elsewhere, Himax NOT responding
+[sscma]   - CSHIGH all 0xFF, RUN differs => Himax IS responding (good)
+[sscma]   - RST_LO all 0x00/0xFF, RUN differs => Himax reset line works
+[sscma]   - SYNC never toggles over 3s => Himax firmware not queuing events
+
+===== CMD: camsweep (for 14.0s) =====
+[sscma] === SPI MODE SWEEP ===
+[sscma] Sending AT+ID? as a WRITE packet, blind-reading 32B after
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma]   MODE0 MSB rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  '................................'
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma]   MODE0 LSB rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  '................................'
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma]   MODE1 MSB rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  '................................'
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma]   MODE1 LSB rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  '................................'
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma]   MODE2 MSB rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  '................................'
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma]   MODE2 LSB rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  '................................'
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma]   MODE3 MSB rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  '................................'
+[sscma] hardReset(): RST low 100ms, high, wait 500ms (matches Seeed)
+[sscma]   MODE3 LSB rx: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  '................................'
+[sscma] === SWEEP DONE ===
+[sscma] Look for a row containing '\r{...' — that's the correct mode.
+
+===== CMD: camblind (for 4.0s) =====
+[sscma] blindAt: sending 'AT+ID?
+' then blind-reading 256B
+[sscma]   rx hex: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+[sscma]   rx asc: '................................................................'
+[sscma]   no \r{ prefix found in first 256B
+
+===== CMD: camblind AT+NAME? (for 4.0s) =====
+[sscma] blindAt: sending 'AT+NAME?
+' then blind-reading 256B
+[sscma]   rx hex: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+[sscma]   rx asc: '................................................................'
+[sscma]   no \r{ prefix found in first 256B
+
+===== CMD: campoke (for 4.0s) =====
+[sscma] sendAT(8): AT+ID?
+
+[campoke] watching for 2s...
+[campoke] done. Total bytes seen: 0
+[campoke] ZERO bytes. Himax is either unpowered, held in reset, wired wrong, or its firmware isn't running.
+
+===== CMD: camimg (for 8.0s) =====
+[camimg] === REAL CAMERA CAPTURE ===
+[camimg] Himax not alive -- falling back to stub
+[camimg]   run `caminit` first; if it still fails the AI chip is not responding and we cannot take a real photo.
+[preview] calling camera.capture()...
+[preview] got frame: 3513 bytes @ 0x3c08ca9a
+[preview] drawing capture ritual preview (holds 4s)...
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc97d48  len=3513  stub=1
+[GUI] blitting RGB565 bitmap 240x240 @ 0x3c07089a
+[preview] preview drawn and pinned — `test off` to resume

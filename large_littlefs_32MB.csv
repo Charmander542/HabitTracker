@@ -1,0 +1,20 @@
+# HabitTracker partition table — 32MB flash, dual OTA, large LittleFS data region.
+# Matches [platformio.ini] board_build.flash_size = 32MB.
+#
+# Layout:
+#   0x00000000  bootloader (handled by framework, before this table)
+#   0x00009000  nvs          20 KB   — Wi-Fi creds, BLE bond, config
+#   0x0000e000  otadata       8 KB   — OTA selector
+#   0x00010000  app0          4 MB   — HabitTracker firmware (primary)
+#   0x00410000  app1          4 MB   — HabitTracker firmware (OTA)
+#   0x00810000  littlefs     24 MB   — habits.json, pet_config.json, sprites,
+#                                      captured snapshots
+#   0x01ff0000  coredump     64 KB   — panic traces (read with idf.py coredump-info)
+#
+# Name,     Type, SubType,   Offset,     Size,       Flags
+nvs,        data, nvs,       0x9000,     0x5000,
+otadata,    data, ota,       0xe000,     0x2000,
+app0,       app,  ota_0,     0x10000,    0x400000,
+app1,       app,  ota_1,     0x410000,   0x400000,
+spiffs,     data, spiffs,    0x810000,   0x17E0000,
+coredump,   data, coredump,  0x1FF0000,  0x10000,

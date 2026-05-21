@@ -1,0 +1,12 @@
+[HOST] booting — 4 s
+[HOST] >>> preview
+[preview] calling camera.capture()...
+[preview] got frame: 3513 bytes @ 0x3c07c9ba
+[preview] drawing capture ritual preview (holds 4s)...
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc97d08  len=3513  stub=1
+[GUI] blitting RGB565 bitmap 240x240 @ 0x3c0607ba
+[preview] preview drawn and pinned — `test off` to resume
+[HOST] >>> test off
+[test] display unpinned
+[HOST] >>> state idle
+[state] forced to IDLE

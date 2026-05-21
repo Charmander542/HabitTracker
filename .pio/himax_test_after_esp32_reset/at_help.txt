@@ -1,0 +1,76 @@
+  AT+GETREG=<"ADDR">
+    Get register
+  AT+SETREG=<"ADDR","VAL">
+    Set register
+  AT+OTA
+    Enter OTA mode
+  AT+MQTTPUBSUB?
+    Get current MQTT publish and subscribe topic
+  AT+MQTTSERVER?
+    Get current MQTT server status and config
+  AT+MQTTSERVERSTA=<STA>
+    Set MQTT server status
+  AT+MQTTSERVER=<"CLIENT_ID","ADDRESS",PORT,"USERNAME","PASSWORD",USE_SSL>
+    Set and connect to a MQTT server
+  AT+WIFI?
+    Get current Wi-Fi status and config
+  AT+WIFIVER?
+    Get Wi-Fi version
+  AT+WIFIVER=<VER>
+    Set Wi-Fi version
+  AT+WIFIIN6=<"IP">
+    Set IPv6 info
+  AT+WIFIIN4=<"IP","NETMASK","GATEWAY">
+    Set IPv4 info
+  AT+WIFISTA=<STA>
+    Set Wi-Fi status
+  AT+WIFI=<"NAME",SECURITY,"PASSWORD">
+    Set and connect to a Wi-Fi
+  AT+INFO?
+    Get info string from device flash
+  AT+INFO=<"INFO_STRING">
+    Store info string to device flash
+  AT+INVOKE?
+    Get invoke task status
+  AT+INVOKE=<N_TIMES,DIFFERED,RESULT_ONLY>
+    Invoke for N times (-1 for infinity loop)
+  AT+SAMPLE?
+    Get sample task status
+  AT+SAMPLE=<N_TIMES>
+    Sample data from current sensor
+  AT+SENSOR?
+    Get current sensor info
+  AT+SENSOR=<SENSOR_ID,ENABLE/DISABLE,OPT_ID>
+    Set a default sensor by sensor ID
+  AT+SENSORS?
+    Get available sensors
+  AT+ALGO?
+    Get current algorithm info
+  AT+ALGO=<ALGORITHM_ID>
+    Set a algorithm by algorithm type ID
+  AT+ALGOS?
+    Get available algorithms
+  AT+MODEL?
+    Get current model info
+  AT+MODEL=<MODEL_ID>
+    Load a model by model ID
+  AT+MODELS?
+    Get available models
+  AT+LED=<ENABLE/DISABLE>
+    Set LED status
+  AT+YIELD=<TIME_S>
+    Yield running tasks for a period time
+  AT+BREAK
+    Stop all running tasks
+  AT+RST
+    Reboot device
+  AT+VER?
+    Get version details
+  AT+STAT?
+    Get device status
+  AT+NAME?
+    Get device name
+  AT+ID?
+    Get device ID
+  AT+HELP?
+    List available commands

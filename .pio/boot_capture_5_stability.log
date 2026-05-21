@@ -1,0 +1,30 @@
+
+=== HabitTracker booting ===
+[Storage] Mounted. Used: 28672 / 23986176 bytes
+[RTC] Configured TZ offset -18000 sec, DST 3600 sec
+[WatcherBSP] IO expander + rails initialised
+[Pet] Loaded vitality: 70
+[Habits] Loaded 5 habits
+[GUI] SPD2010 412x412 (QSPI SPI3) ready
+[Camera] Stub: embedded JPEG for preview until SSCMA bridge
+[Main] Pet vitality: 70 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[Storage] Capture saved: /captures/1970-01-01_Hydrate.jpg (3513 bytes)
+Guru Meditation Error: Core  1 panic'ed (StoreProhibited). Exception was unhandled.
+
+Core  1 register dump:
+PC      : 0x4200e293  PS      : 0x00060e30  A0      : 0x8200edf1  A1      : 0x3fceb910  
+A2      : 0xfddd1e52  A3      : 0x00000420  A4      : 0x04200000  A5      : 0x3c066d76  
+A6      : 0x00000000  A7      : 0x6fe372e3  A8      : 0x04200420  A9      : 0x3c066c68  
+A10     : 0x3c067b00  A11     : 0x0000063a  A12     : 0x3c066aa2  A13     : 0x00000000  
+A14     : 0x00060023  A15     : 0x00000003  SAR     : 0x0000001f  EXCCAUSE: 0x0000001d  
+EXCVADDR: 0xfddd1e52  LBEG    : 0x400570e8  LEND    : 0x400570f3  LCOUNT  : 0x00000000  
+
+
+Backtrace: 0x4200e290:0x3fceb910 0x4200edee:0x3fceb930 0x42010cad:0x3fceb9c0 0x42011a7e:0x3fcebb50 0x420042bd:0x3fcebb70 0x42006a62:0x3fcebbd0 0x420075dc:0x3fcebc30 0x4201502d:0x3fcebc50
+
+
+
+
+ELF file SHA256: 55df1f27e50c607d
+

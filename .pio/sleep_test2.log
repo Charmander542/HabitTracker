@@ -1,0 +1,52 @@
+[HOST] === DEEP-SLEEP TEST ===
+[HOST] port=COM3 log=.pio\sleep_test2.log
+[HOST] waiting for boot...
+=== HabitTracker booting ===
+[Boot] chip: ESP32-S3 rev0  cores=2  cpu=240MHz
+[Boot] flash: 33554432 bytes  sketch: 785504 / 4718592 bytes
+[Boot] heap: total=318136 free=293200
+[Boot] psram: total=8386215 free=8385791  OK
+[Duck] Converted 9 frames (25x25), 2300 opaque px total
+[Storage] Mounted. Used: 49152 / 23986176 bytes
+[RTC] Configured TZ offset -18000 sec, DST 3600 sec
+[WatcherBSP] IO expander + rails initialised
+[Pet] Loaded vitality: 100
+[Habits] Loaded 5 habits
+[GUI] SPD2010 412x412 (QSPI SPI3) ready
+[Camera] Stub: embedded RGB565 scene 240x240 (115200 bytes) + JPEG mirror (3513 bytes)
+[sscma] begin(): SPI2 SCLK=4 MOSI=5 MISO=6 CS=21 clk=12000000Hz mode=0
+[sscma] expander cfg=0x20FF out=0xDF00
+[sscma] hardReset(): RST low 100ms, high
+[sscma] probing SPI link with AT+ID? ...
+[sscma] sendAT(8): AT+ID?
+[sscma]   rx +59 (kept 59, len=59) tail: 0D 7B 22 74 79 70 65 22 3A 20 30 2C 20 22 6E 61 6D 65 22 3A 20 22 49 44 3F 22 2C 20 22 63 6F 64 65 22 3A 20 30 2C 20 22 64 61 74 61 22 3A 20 22 33 36 30 37 37 39 66 35 22 7D 0A
+[sscma] AT+ID? -> 57 bytes
+[sscma] response: {"type": 0, "name": "ID?", "code": 0, "data": "360779f5"}
+[sscma] sendAT(10): AT+NAME?
+[sscma]   NAME: {"type": 0, "name": "NAME?", "code": 0, "data": "SenseCAP Watcher"}
+[sscma] sendAT(9): AT+VER?
+[sscma]   VER:  {"type": 0, "name": "VER?", "code": 0, "data": {"at_api": "v0", "software": "2024.08.16", "hardware": "1"}}
+[sscma] *** Himax SSCMA SPI link ESTABLISHED — camera ready ***
+[Main] SSCMA camera online — real frames enabled
+[Main] Pet vitality: 100 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[Main] Type `help` on serial for the test-harness commands.
+
+[HOST] >>> sleep
+[Sleep] Long-press detected — entering sleep mode
+[Sleep] LCD off, LED off, AI rail gated. Tap the knob to wake.
+[HOST] OK: device confirmed sleep entry.
+
+[HOST] (sleeping for 3 s ...)
+
+[HOST] >>> ping (any cmd)
+[Sleep] Serial activity — waking
+[Sleep] Wake requested after 3133 ms in sleep
+[Sleep] Awake. Back to IDLE.
+
+[HOST] ============= RESULT =============
+[HOST] boot_done     : True
+[HOST] sleep_entered : True
+[HOST] serial_wake   : True
+[HOST] sleep_woke    : True
+[HOST] PASS: deep-sleep enter + serial-wake roundtrip works.

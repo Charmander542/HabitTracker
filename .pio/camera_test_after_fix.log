@@ -1,0 +1,774 @@
+[HOST] === SSCMA SPI CAMERA TEST ===
+[HOST] port=COM3 log=.pio\camera_test_after_fix.log
+[HOST] waiting up to 8 s for boot to finish...
+=== HabitTracker booting ===
+[Boot] chip: ESP32-S3 rev0  cores=2  cpu=240MHz
+[Boot] flash: 33554432 bytes  sketch: 788064 / 4718592 bytes
+[Boot] heap: total=318104 free=293168
+[Boot] psram: total=8386215 free=8385791  OK
+[Duck] Converted 9 frames (25x25), 2300 opaque px total
+[Storage] Mounted. Used: 49152 / 23986176 bytes
+[RTC] Configured TZ offset -18000 sec, DST 3600 sec
+[WatcherBSP] IO expander + rails initialised
+[Pet] Loaded vitality: 100
+[Habits] Loaded 5 habits
+[GUI] SPD2010 412x412 (QSPI SPI3) ready
+[Camera] Stub: embedded RGB565 scene 240x240 (115200 bytes) + JPEG mirror (3513 bytes)
+[sscma] begin(): SPI2 SCLK=4 MOSI=5 MISO=6 CS=21 clk=12000000Hz mode=0
+[sscma] expander cfg=0x20FF out=0xDF00
+[sscma] hardReset(): RST low 100ms, high
+[sscma] probing SPI link with AT+ID? ...
+[sscma] sendAT(8): AT+ID?
+[sscma]   rx +59 (kept 59, len=59) tail: 0D 7B 22 74 79 70 65 22 3A 20 30 2C 20 22 6E 61 6D 65 22 3A 20 22 49 44 3F 22 2C 20 22 63 6F 64 65 22 3A 20 30 2C 20 22 64 61 74 61 22 3A 20 22 33 36 30 37 37 39 66 35 22 7D 0A
+[sscma] AT+ID? -> 57 bytes
+[sscma] response: {"type": 0, "name": "ID?", "code": 0, "data": "360779f5"}
+[sscma] sendAT(10): AT+NAME?
+[sscma]   NAME: {"type": 0, "name": "NAME?", "code": 0, "data": "SenseCAP Watcher"}
+[sscma] sendAT(9): AT+VER?
+[sscma]   VER:  {"type": 0, "name": "VER?", "code": 0, "data": {"at_api": "v0", "software": "2024.08.16", "hardware": "1"}}
+[sscma] *** Himax SSCMA SPI link ESTABLISHED ? camera ready ***
+[Main] SSCMA camera online ? real frames enabled
+[Main] Pet vitality: 100 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[Main] Type `help` on serial for the test-harness commands.
+
+[HOST] >>> camstatus
+[sscma] --- status ---
+[sscma] ready=YES alive=YES mode=0
+[sscma] PCA9535  IN=0xFF9A  OUT=0xDF80  CFG=0x207F
+[sscma]   AI_CHIP pwr (bit 11) = ON
+[sscma]   RST  (bit 7)        = HIGH   (HIGH == running)
+[sscma]   SYNC (bit 6, in)    = low   (HIGH == data ready)
+[sscma] SPI: SCLK=4 MOSI=5 MISO=6 CS=21 clk=12000000Hz
+[sscma] scratch=0 bytes
+[sscma] one-shot AVAILABLE = 0 bytes
+
+[HOST] >>> camcold 4000
+[sscma] coldBootProbe: pulse RST, watch SPI for 4000 ms
+[sscma] hardReset(): RST low 100ms, high
+[sscma] coldBootProbe total 0 bytes
+[sscma]   silence ? chip might not be running SSCMA on SPI.
+[sscma]   try `cambus` and `camsweep`.
+
+[HOST] >>> caminit
+[caminit] re-probing SSCMA/Himax...
+[sscma] begin(): SPI2 SCLK=4 MOSI=5 MISO=6 CS=21 clk=12000000Hz mode=0
+[sscma] expander cfg=0x207F out=0xDF80
+[sscma] hardReset(): RST low 100ms, high
+[sscma] probing SPI link with AT+ID? ...
+[sscma] sendAT(8): AT+ID?
+[sscma]   rx +59 (kept 59, len=59) tail: 0D 7B 22 74 79 70 65 22 3A 20 30 2C 20 22 6E 61 6D 65 22 3A 20 22 49 44 3F 22 2C 20 22 63 6F 64 65 22 3A 20 30 2C 20 22 64 61 74 61 22 3A 20 22 33 36 30 37 37 39 66 35 22 7D 0A
+[sscma] AT+ID? -> 57 bytes
+[sscma] response: {"type": 0, "name": "ID?", "code": 0, "data": "360779f5"}
+[sscma] sendAT(10): AT+NAME?
+[sscma]   NAME: {"type": 0, "name": "NAME?", "code": 0, "data": "SenseCAP Watcher"}
+[sscma] sendAT(9): AT+VER?
+[sscma]   VER:  {"type": 0, "name": "VER?", "code": 0, "data": {"at_api": "v0", "software": "2024.08.16", "hardware": "1"}}
+[sscma] *** Himax SSCMA SPI link ESTABLISHED ? camera ready ***
+[caminit] result: OK  (ready=1 alive=1)
+
+[HOST] >>> camsend AT+ID?
+[camsend] -> AT+ID?
+[sscma] sendAT(8): AT+ID?
+[sscma]   rx +59 (kept 59, len=59) tail: 0D 7B 22 74 79 70 65 22 3A 20 30 2C 20 22 6E 61 6D 65 22 3A 20 22 49 44 3F 22 2C 20 22 63 6F 64 65 22 3A 20 30 2C 20 22 64 61 74 61 22 3A 20 22 33 36 30 37 37 39 66 35 22 7D 0A
+[camsend] <- 57 bytes:
+  {"type": 0, "name": "ID?", "code": 0, "data": "360779f5"}
+
+[HOST] >>> camsend AT+VER?
+[camsend] -> AT+VER?
+[sscma] sendAT(9): AT+VER?
+[sscma]   rx +109 (kept 109, len=109) tail: 22 3A 20 7B 22 61 74 5F 61 70 69 22 3A 20 22 76 30 22 2C 20 22 73 6F 66 74 77 61 72 65 22 3A 20 22 32 30 32 34 2E 30 38 2E 31 36 22 2C 20 22 68 61 72 64 77 61 72 65 22 3A 20 22 31 22 7D 7D 0A
+[camsend] <- 107 bytes:
+  {"type": 0, "name": "VER?", "code": 0, "data": {"at_api": "v0", "software": "2024.08.16", "hardware": "1"}}
+
+[HOST] >>> camimg
+[camimg] === REAL CAMERA CAPTURE ===
+[camimg] SAMPLE path (compile opt=3) ...
+[sscma] sendAT(10): AT+BREAK
+[sscma] sendAT(17): AT+SENSOR=1,1,3
+[sscma] sendAT(13): AT+SAMPLE=1
+[sscma]   rx +139 (kept 139, len=139) tail: 65 22 3A 20 31 2C 20 22 73 74 61 74 65 22 3A 20 31 2C 20 22 6F 70 74 5F 69 64 22 3A 20 33 2C 20 22 6F 70 74 5F 64 65 74 61 69 6C 22 3A 20 22 36 34 30 78 34 38 30 20 41 75 74 6F 22 7D 7D 7D 0A
+[sscma] opt=3 envelope #1: 137 bytes
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WA
+RN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] readJsonResponse TIMEOUT after 3678 ms (scratch=0 bytes)
+[sscma] captureJpeg miss opt=3
+[sscma] WARN: bogus AVAILABLE count 0x44DC ? discarding
+[sscma] sendAT(10): AT+BREAK
+[sscma] WARN: bogus AVAILABLE count 0x4514 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x4514 ? discarding
+[sscma] sendAT(17): AT+SENSOR=1,1,2
+[sscma] WARN: bogus AVAILABLE count 0x4514 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ?
+? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x459F ? discarding
+[sscma] readJsonResponse TIMEOUT after 3000 ms (scratch=0 bytes)
+[sscma] setSensor: no JSON reply
+[sscma] WARN: AT+SENSOR failed for opt=2
+[sscma] sendAT(13): AT+SAMPLE=1
+[sscma] WARN: bogus AVAILABLE count 0x462A ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WAR
+N: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 
+0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] readJsonResponse TIMEOUT after 3750 ms (scratch=0 bytes)
+[sscma] captureJpeg miss opt=2
+[sscma] WARN: bogus AVAILABLE count 0x77FA ? discarding
+[sscma] sendAT(10): AT+BREAK
+[sscma] WARN: bogus AVAILABLE count 0x7832 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x7832 ? discarding
+[sscma] sendAT(17): AT+SENSOR=1,1,1
+[sscma] WARN: bogus AVAILABLE count 0x7832 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ?
+? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] readJsonResponse TIMEOUT after 3000 ms (scratch=0 bytes)
+[sscma] setSensor: no JSON reply
+[sscma] WARN: AT+SENSOR failed for opt=1
+[sscma] sendAT(13): AT+SAMPLE=1
+[sscma] WARN: bogus AVAILABLE count 0x78BD ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WAR
+N: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 
+0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] readJsonResponse TIMEOUT after 3750 ms (scratch=0 bytes)
+[sscma] captureJpeg miss opt=1
+[sscma] WARN: bogus AVAILABLE count 0x9F38 ? discarding
+[sscma] sendAT(10): AT+BREAK
+[sscma] WARN: bogus AVAILABLE count 0x9F70 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9F70 ? discarding
+[sscma] sendAT(17): AT+SENSOR=1,1,0
+[sscma] WARN: bogus AVAILABLE count 0x9F70 ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ? discarding
+[sscma] WARN: bogus AVAILABLE count 0x9FFB ?
+
+[HOST] ============= RESULT =============
+[HOST] boot finished        : True
+[HOST] SSCMA link OK on boot: True
+[HOST] AT+ID response seen  : False
+[HOST] camimg got JPEG      : False (None bytes)
+[HOST] PASS: Himax SPI link is alive.

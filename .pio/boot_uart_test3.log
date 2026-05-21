@@ -1,0 +1,32 @@
+
+=== HabitTracker booting ===
+[Boot] chip: ESP32-S3 rev0  cores=2  cpu=240MHz
+[Boot] flash: 33554432 bytes  sketch: 762832 / 4718592 bytes
+[Boot] heap: total=345092 free=320240
+[Boot] psram: total=8386215 free=8385791  OK
+[Duck] Converted 9 frames (25x25), 2300 opaque px total
+[Storage] Mounted. Used: 49152 / 23986176 bytes
+[RTC] Configured TZ offset -18000 sec, DST 3600 sec
+[WatcherBSP] IO expander + rails initialised
+[Pet] Loaded vitality: 100
+[Habits] Loaded 5 habits
+[GUI] SPD2010 412x412 (QSPI SPI3) ready
+[Camera] Stub: embedded RGB565 scene 240x240 (115200 bytes) + JPEG mirror (3513 bytes)
+[sscma] begin(): UART1 TX=17 RX=18 @ 921600 baud (Himax SSCMA AT)
+[sscma] expander cfg=0x20FF out=0xDF00
+[sscma] hardReset(): RST low 100ms, high, drain banner 200ms (matches Seeed BSP)
+[sscma] post-reset banner: 283 bytes
+[sscma]   ascii: '.1st BL Modem Build DATE=Mar 27 2024, Version: 2.12..Please input any key to enter X-Modem mode in 100 ms ..waiting input key.....slot_header invalid !!..slot flash_offset 0x00000000..New MemDesp hima'
+[sscma]   ... (+83 more bytes drained)
+[sscma] probing AT+ID? ...
+[sscma] sendAT(8): AT+ID?
+
+[sscma] readJsonResponse TIMEOUT after 2500 ms (scratch=0 bytes)
+[sscma] no JSON response to AT+ID? within 2.5s
+[sscma]   scratch length: 0
+[sscma]   run `camcold 4000` for a focused cold-boot trace
+[Main] SSCMA camera NOT responding — capture will use stub scene
+[Main]   for diagnostics: `camcold 4000`, `cambus`, `caminit`, `camstatus`
+[Main] Pet vitality: 100 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[Main] Type `help` on serial for the test-harness commands.

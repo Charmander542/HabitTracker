@@ -1,0 +1,50 @@
+[HOST] booting — 4 s
+[HOST] >>> preview
+[preview] calling camera.capture()...
+[preview] got frame: 3513 bytes @ 0x3c0607a6
+[preview] drawing capture ritual preview (holds 4s)...
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc97ce8  len=3513
+[JPEG] decoding 3513 bytes — magic FF D8 FF E0 OK
+[JPEG] image 280x210  (display 412x412)
+[JPEG] scale-opt=0 scaled 280x210 at (66,101)
+Guru Meditation Error: Core  1 panic'ed (StoreProhibited). Exception was unhandled.
+Core  1 register dump:
+PC      : 0x400570e8  PS      : 0x00060e30  A0      : 0x8200f700  A1      : 0x3fceb870  
+A2      : 0xb01cb01c  A3      : 0x00000000  A4      : 0x00000080  A5      : 0xb01cb01c  
+A6      : 0x3fc9452c  A7      : 0x00000008  A8      : 0x00000000  A9      : 0x00000000  
+A10     : 0x3fcee690  A11     : 0x000000c1  A12     : 0x00000074  A13     : 0x0000f9a8  
+A14     : 0x00060023  A15     : 0x00000003  SAR     : 0x00000000  EXCCAUSE: 0x0000001d  
+EXCVADDR: 0xb01cb01c  LBEG    : 0x400570e8  LEND    : 0x400570f3  LCOUNT  : 0x00000007  
+Backtrace: 0x400570e5:0x3fceb870 0x4200f6fd:0x3fceb880 0x42011860:0x3fceb8b0 0x42012da2:0x3fceba40 0x42004026:0x3fceba60 0x42007e83:0x3fcebac0 0x420088e5:0x3fcebc30 0x4201664d:0x3fcebc50
+ELF file SHA256: 9a593a4b3dce3623
+Rebooting...
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0xc (RTC_SW_CPU_RST),boot:0x9 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4205e666
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce3808,len:0x4bc
+load:0x403c9700,len:0xbd8
+load:0x403cc700,len:0x2a0c
+entry 0x403c98d0
+=== HabitTracker booting ===
+[Boot] chip: ESP32-S3 rev0  cores=2  cpu=240MHz
+[Boot] flash: 33554432 bytes  sketch: 629632 / 4718592 bytes
+[Boot] heap: total=345300 free=320532
+[Boot] psram: total=8386215 free=8385791  OK
+[Duck] Converted 9 frames (25x25), 2300 opaque px total
+[Storage] Mounted. Used: 45056 / 23986176 bytes
+[RTC] Configured TZ offset -18000 sec, DST 3600 sec
+[WatcherBSP] IO expander + rails initialised
+[Pet] Loaded vitality: 70
+[Habits] Loaded 5 habits
+[GUI] SPD2010 412x412 (QSPI SPI3) ready
+[Camera] Stub: embedded JPEG for preview until SSCMA bridge
+[Main] Pet vitality: 70 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[Main] Type `help` on serial for the test-harness commands.
+[HOST] >>> test off
+[test] display unpinned
+[HOST] >>> state idle
+[state] forced to IDLE

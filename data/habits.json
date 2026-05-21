@@ -1,0 +1,64 @@
+{
+  "habits": [
+    {
+      "name": "Hydrate",
+      "emoji": "W",
+      "color": 1631,
+      "goalToday": 8,
+      "completedToday": 0,
+      "streak": 0,
+      "lastLogDate": "",
+      "minGoal": 4,
+      "maxGoal": 14,
+      "unit": "glasses"
+    },
+    {
+      "name": "Read",
+      "emoji": "R",
+      "color": 63904,
+      "goalToday": 20,
+      "completedToday": 0,
+      "streak": 0,
+      "lastLogDate": "",
+      "minGoal": 5,
+      "maxGoal": 60,
+      "unit": "min"
+    },
+    {
+      "name": "Meditate",
+      "emoji": "M",
+      "color": 34847,
+      "goalToday": 10,
+      "completedToday": 0,
+      "streak": 0,
+      "lastLogDate": "",
+      "minGoal": 5,
+      "maxGoal": 30,
+      "unit": "min"
+    },
+    {
+      "name": "Move",
+      "emoji": "V",
+      "color": 2016,
+      "goalToday": 30,
+      "completedToday": 0,
+      "streak": 0,
+      "lastLogDate": "",
+      "minGoal": 10,
+      "maxGoal": 90,
+      "unit": "min"
+    },
+    {
+      "name": "Sleep Early",
+      "emoji": "Z",
+      "color": 18975,
+      "goalToday": 1,
+      "completedToday": 0,
+      "streak": 0,
+      "lastLogDate": "",
+      "minGoal": 1,
+      "maxGoal": 1,
+      "unit": "night"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+[HOST] booting — 4 s
+[HOST] >>> preview
+[preview] calling camera.capture()...
+[preview] got frame: 3513 bytes @ 0x3c0607a6
+[preview] drawing capture ritual preview (holds 4s)...
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc97ce8  len=3513
+[JPEG] decoding 3513 bytes — magic FF D8 FF E0 OK
+[JPEG] copied to RAM @ 0x3fcf31e4 (free heap=303392)
+[JPEG] image 280x210  (display 412x412)
+[JPEG] scale-opt=0 scaled 280x210 at (66,101)
+G
+uru Meditation Error: Core  1 panic'ed (StoreProhibited). Exception was unhandled.
+Core  1 register dump:
+PC      : 0x400570e8  PS      : 0x00060e30  A0      : 0x8200f744  A1      : 0x3fceb870  
+A2      : 0xb01cb01c  A3      : 0x00000000  A4      : 0x00000080  A5      : 0xb01cb01c  
+A6      : 0x3fc9452c  A7      : 0x00000008  A8      : 0x00000000  A9      : 0x00000000  
+A10     : 0x3fcee690  A11     : 0x000000c1  A12     : 0x00000074  A13     : 0x0000f9a8  
+A14     : 0x00060023  A15     : 0x00000003  SAR     : 0x00000000  EXCCAUSE: 0x0000001d  
+EXCVADDR: 0xb01cb01c  LBEG    : 0x400570e8  LEND    : 0x400570f3  LCOUNT  : 0x00000007  
+Backtrace: 0x400570e5:0x3fceb870 0x4200f741:0x3fceb880 0x420118a4:0x3fceb8b0 0x42012de6:0x3fceba40 0x42003fd6:0x3fceba60 0x42007ec7:0x3fcebac0 0x42008929:0x3fcebc30 0x42016691:0x3fcebc50
+ELF file SHA256: b0a19041ebc76066
+Rebooting...
+[HOST] >>> test off
+[HOST] >>> state idle

@@ -1,0 +1,149 @@
+[HOST] === FULL E2E ===
+=== HabitTracker booting ===
+[Boot] chip: ESP32-S3 rev0  cores=2  cpu=240MHz
+[Boot] flash: 33554432 bytes  sketch: 785504 / 4718592 bytes
+[Boot] heap: total=318136 free=293200
+[Boot] psram: total=8386215 free=8385791  OK
+[Duck] Converted 9 frames (25x25), 2300 opaque px total
+[Storage] Mounted. Used: 49152 / 23986176 bytes
+[RTC] Configured TZ offset -18000 sec, DST 3600 sec
+[WatcherBSP] IO expander + rails initialised
+[Pet] Loaded vitality: 100
+[Habits] Loaded 5 habits
+[GUI] SPD2010 412x412 (QSPI SPI3) ready
+[Camera] Stub: embedded RGB565 scene 240x240 (115200 bytes) + JPEG mirror (3513 bytes)
+[sscma] begin(): SPI2 SCLK=4 MOSI=5 MISO=6 CS=21 clk=12000000Hz mode=0
+[sscma] expander cfg=0x20FF out=0xDF00
+[sscma] hardReset(): RST low 100ms, high
+[sscma] probing SPI link with AT+ID? ...
+[sscma] sendAT(8): AT+ID?
+[sscma]   rx +59 (kept 59, len=59) tail: 0D 7B 22 74 79 70 65 22 3A 20 30 2C 20 22 6E 61 6D 65 22 3A 20 22 49 44 3F 22 2C 20 22 63 6F 64 65 22 3A 20 30 2C 20 22 64 61 74 61 22 3A 20 22 33 36 30 37 37 39 66 35 22 7D 0A
+[sscma] AT+ID? -> 57 bytes
+[sscma] response: {"type": 0, "name": "ID?", "code": 0, "data": "360779f5"}
+[sscma] sendAT(10): AT+NAME?
+[sscma]   NAME: {"type": 0, "name": "NAME?", "code": 0, "data": "SenseCAP Watcher"}
+[sscma] sendAT(9): AT+VER?
+[sscma]   VER:  {"type": 0, "name": "VER?", "code": 0, "data": {"at_api": "v0", "software": "2024.08.16", "hardware": "1"}}
+[sscma] *** Himax SSCMA SPI link ESTABLISHED ? camera ready ***
+[Main] SSCMA camera online ? real frames enabled
+[Main] Pet vitality: 100 | Habits: 5 | Date: 1970-01-01
+[Main] Ready. State: IDLE
+[Main] Type `help` on serial for the test-harness commands.
+
+[HOST] === STAGE 1: direct camera capture (camimg) ===
+[camimg] === REAL CAMERA CAPTURE ===
+[camimg] firing AT+SAMPLE=1 ...
+[sscma] sendAT(13): AT+SAMPLE=1
+[sscma]   rx +2671 (kept 2671, len=2671) tail: 51 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 41 22 2C 20 22 72 6F 74 61 74 65 22 3A 20 30 7D 7D 0A
+[sscma] envelope #1: 137 bytes
+[sscma]   first 120 chars: {"type": 0, "name": "SAMPLE", "code": 0, "data": {"sensor": {"id": 1, "type": 1, "state": 1, "opt_id": 0, "opt_detail": 
+[sscma] envelope #2: 2530 bytes
+[sscma]   first 120 chars: {"type": 1, "name": "SAMPLE", "code": 0, "data": {"count": 1, "resolution": [240, 240], "image": "/9j/4AAQSkZJRgABAQEASA
+[sscma] found image field: 2416 base64 chars
+[sscma] base64 -> 1812 JPEG bytes
+[camimg] got JPEG 1812 bytes in 140 ms  [FF D8 FF ..]
+[camimg] first 32 bytes: FF D8 FF E0 00 10 4A 46 49 46 00 01 01 01 00 48 00 48 00 00 FF DB 00 43 00 1B 12 14 17 14 11 1B
+[GUI] drawCaptureRitual countdown=0  fb=0x3fca2f20  len=1812  stub=0
+[JPEG] decoding 1812 bytes ? magic FF D8 FF E0 OK
+[JPEG] copied to RAM @ 0x3fcf3d2c (free heap=274844)
+[JPEG] image 240x240  (display 412x412)
+[JPEG] scale-opt=0 scaled 240x240 at (86,86)
+[JPEG] decode() returned 1
+[GUI] capture preview: decoded=yes
+[camimg] displayed. `test off` to resume.
+[test] display unpinned
+
+[HOST] === STAGE 2: drive HABIT_SELECT -> CAPTURE through state cmds ===
+[State] IDLE -> CAPTURE_RITUAL @ 19425ms
+[state] forced to CAPTURE_RITUAL
+[GUI] drawCaptureRitual countdown=3  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=2  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[GUI] drawCaptureRitual countdown=1  fb=0x0  len=0  stub=0
+[Camera] =============================================
+[Camera] capture #1 requested at t=21498 ms
+[Camera] (1) SSCMA path: requesting REAL frame...
+[sscma] sendAT(13): AT+SAMPLE=1
+[sscma] found image field: 2632 base64 chars
+[sscma] base64 -> 1972 JPEG bytes
+[Camera] >>> REAL JPEG captured: 1972 bytes in 77 ms [FF D8 FF ...]
+[Camera] =============================================
+[Storage] Capture saved: /captures/1970-01-01_Hydrate.jpg (1972 bytes)
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc9a708  len=1972  stub=0
+[JPEG] decoding 1972 bytes ? magic FF D8 FF E0 OK
+[JPEG] copied to RAM @ 0x3fcf5168 (free heap=273952)
+[JPEG] image 240x240  (display 412x412)
+[JPEG] scale-opt=0 scaled 240x240 at (86,86)
+[JPEG] decode() returned 1
+[GUI] capture preview: decoded=yes
+[Habits] Hydrate: 1/8 glasses
+[Pet] +10 vitality ? 100
+[State] CAPTURE_RITUAL -> CELEBRATION @ 25964ms
+[State] CELEBRATION -> IDLE @ 29010ms
+[state] forced to IDLE
+
+[HOST] === STAGE 3: sleep + serial-wake ===
+[Sleep] Long-press detected ? entering sleep mode
+[Sleep] LCD off, LED off, AI rail gated. Tap the knob to wake.
+[Sleep] Serial activity ? waking
+[Sleep] Wake requested after 2421 ms in sleep
+[Sleep] Awake. Back to IDLE.
+Unknown command: '?'. Type `help` for the list.
+
+[HOST] ============= RESULT =============
+[HOST] boot                               : True
+[HOST] sscma_alive_at_boot                : True
+[HOST] camimg_jpeg_bytes                  : 1812
+[HOST] real_jpeg_via_state_capture        : False
+[HOST] real_jpeg_in_capture_path          : True
+[HOST] sleep_in                           : True
+[HOST] sleep_out                          : True
+[HOST] PASS: camera + sleep + wake all working end-to-end.

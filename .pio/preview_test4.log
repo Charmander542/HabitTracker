@@ -1,0 +1,12 @@
+[HOST] booting — 4 s
+[HOST] >>> preview
+[preview] calling camera.capture()...
+[preview] got frame: 3513 bytes @ 0x3c0607a6
+[preview] drawing capture ritual preview (holds 4s)...
+[GUI] drawCaptureRitual countdown=0  fb=0x3fc97ce8  len=3513  stub=1
+[GUI] drawing stub polaroid preview
+[preview] preview drawn and pinned — `test off` to resume
+[HOST] >>> test off
+[test] display unpinned
+[HOST] >>> state idle
+[state] forced to IDLE
